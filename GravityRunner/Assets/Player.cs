@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 	public float changeSpeed;
 	public float jumpPower;
 	Rigidbody2D rigidBody;
+	bool isGrounded = false;
+	public float hight;
 
 	// Use this for initialization
 	void Start () {
@@ -19,8 +21,10 @@ public class Player : MonoBehaviour {
 	void Update () {
 		transform.Translate (((Vector2.right * runSpeed) + (Vector2.right * runSpeed)*Input.GetAxis("Horizontal") * changeSpeed)*Time.deltaTime);
 
-		if (Input.GetAxis ("Jump") != 0) {
-			rigidBody.AddForce (Vector2.up * jumpPower);
+		if (Physics2D.Raycast(transform.position, Vector2.down, hight)) {
+			print ("there is something there");
+			rigidBody.AddForce (Vector2.up * jumpPower * Input.GetAxis("Jump"));
 		}
 	}
+
 }
